@@ -6,6 +6,7 @@
   border: 1px solid rgb(233, 233, 233);
   border-radius: 20px;
   transition: 0.3s transform;
+  box-shadow: 3px 3px 5px rgb(235, 235, 235);
 
   &:hover {
     transform: scale(1.05, 1.05);
