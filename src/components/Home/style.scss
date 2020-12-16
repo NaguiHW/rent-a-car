@@ -1,0 +1,68 @@
+.home {
+  .content {
+    width: 1440px;
+    margin: 0 auto;
+
+    .filters {
+      margin: 10px 0;
+      position: relative;
+      display: flex;
+      width: 20em;
+      height: 3em;
+      line-height: 3;
+      background: #2F59A7;
+      overflow: hidden;
+      border-radius: .25em;
+
+      &:after {
+        content: '\25BC';
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0 1em;
+        background: #2F59A7;
+        cursor: pointer;
+        pointer-events: none;
+        -webkit-transition: .25s all ease;
+        -o-transition: .25s all ease;
+        transition: .25s all ease;
+      }
+
+      &:hover::after {
+        color: #F4D06F;
+      }
+
+      select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+        outline: 0;
+        box-shadow: none;
+        border: 0 !important;
+        background: #2F59A7;
+        background-image: none;
+      }
+
+      select::-ms-expand {
+        display: none;
+      }
+
+      select {
+        flex: 1;
+        padding: 0 .5em;
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+      }
+    }
+
+    .cars {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      column-gap: 10px;
+      row-gap: 10px;
+    }
+  }
+}
