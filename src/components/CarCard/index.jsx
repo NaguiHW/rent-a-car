@@ -4,7 +4,7 @@ import './style.scss';
 
 const CarCard = () => (
   <div className="car-card">
-    <h1 className="title">Car Name</h1>
+    <h1 className="title">Car Model</h1>
     <div className="image-container">
       <img src="https://s3.caradvice.com.au/wp-content/uploads/2016/11/great-wall_wey_w01_06.jpg" alt="SUV" />
     </div>
