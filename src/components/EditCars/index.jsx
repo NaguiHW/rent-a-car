@@ -16,6 +16,7 @@ const EditCars = () => {
     doors: '',
     transmission: transmission[0],
     quantity: '',
+    images: [],
   });
 
   const handleChange = e => {
@@ -29,6 +30,27 @@ const EditCars = () => {
     e.preventDefault();
     console.log(formData);
   }
+
+  const deleteImage = e => {
+    setFormData({
+      ...formData,
+      images: formData.images.filter(image => image.local !== e.target.value),
+    });
+  };
+
+  const addImageToState = e => {
+    const selectedImage = e.target.files[0];
+    const formdata = new FormData();
+    formdata.append('image', selectedImage);
+
+    setFormData({
+      ...formData,
+      images: [...formData.images, {
+        local: window.URL.createObjectURL(selectedImage),
+        formdata,
+      }],
+    });
+  };
  
   return (
     <div className="edit-cars">
@@ -95,6 +117,23 @@ const EditCars = () => {
             <input type="number" name="quantity" id="quantity" onChange={handleChange} required autoComplete="off" min="1" step="1" />
           </label>
         </div>
+        <p>You can upload up to 5 images</p>
+        <div className="uploaded-images">
+          {
+            formData.images.map(image => (
+              <>
+                <div className="image-container">
+                  <img src={image.local} alt="uploaded" className="image" />
+                </div>
+                <button type="button" className="icon-container" onClick={deleteImage} value={image.local}>X</button>
+              </>
+            ))
+          }
+        </div>
+        <label htmlFor="image">
+          <span>Upload Images: </span>
+          <input type="file" id="image" name="image" onChange={addImageToState} disabled={formData.images.length === 5 && true} accept=".jpg, .jpeg, .png" />
+        </label>
         <button type="submit">Create</button>
       </form>
     </div>
