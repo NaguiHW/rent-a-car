@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '../NavBar';
-import axios from '../../axios'
+import { storage } from '../../firebase';
+import axios from '../../axios';
 import './style.scss';
 
 const carTypes = ['SUV', 'Truck', 'Sedan', 'Van', 'Luxury Car', 'Sports Car'];
 const transmission = ['Auto', 'Manual'];
 
 const EditCars = () => {
-  const [formValues, setFormValues] = useState({
+  const [formData, setFormData] = useState({
     model: '',
     carType: carTypes[0],
     price: '',
@@ -18,78 +19,109 @@ const EditCars = () => {
     transmission: transmission[0],
     quantity: '',
     images: [],
+    imagesLink: [],
+  });
+  const [cars, setCars] = useState([])
+  const [info, setInfo] = useState({
+    name: '',
+    image: '',
+  })
+  const [progressPercent, setProgressPercent] = useState(0);
+  const [error, setError] = useState({
+    found: false,
+    message: '',
   });
 
   const handleChange = e => {
-    setFormValues({
-      ...formValues,
+    setFormData({
+      ...formData,
       [e.target.name]: e.target.value,
     })
-  }
+  };
 
-  const addCar = async e => {
+  const handleSubmit =async e => {
     e.preventDefault();
-    const { images } = formValues;
-    if (images.length < 1) {
-      alert('You have to have at least 1 image');
-    } else {
-      console.log(images[0].formData);
-      axios.post('/uploadImages', images[0].formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+    const { images } = formData;
+    if (images.length > 0) {
+      const imagesLink = []
+      const uploadImagesToServer = await Promise.all(images.map(async image => {
+        try {
+          const uploadTask = storage.ref(`images/${image.selectedImage.name}`).put(image.selectedImage);
+          uploadTask.on(
+            'state_changed',
+            snapshot => {},
+            error => {
+              console.error(error);
+            },
+            () => {
+              storage
+                .ref('images')
+                .child(image.selectedImage.name)
+                .getDownloadURL()
+                .then(url => {
+                  imagesLink.push(url);
+                })
+                .then(() => {
+                  setFormData({
+                    ...formData,
+                    imagesLink,
+                  })
+                });
+            }
+          )
+        } catch (err) {
+          console.error(err);
         }
-      })
-      .then(res => {
-        console.log(res)
-      })
-      // const imagesResponse = await axios({
-      //   method: 'post',
-      //   url: '/uploadImages',
-      //   file: images[0].formData,
-      // })
-    
-      // console.log(imagesResponse.data);
+      }));
 
-      // const response = await axios({
-      //   method: 'post',
-      //   url: '/create-car',
-      //   data: formValues,
-      // });
-      // console.log(response.data);
+      const uploadInfo = await axios({
+        method: 'post',
+        url: '/uploadInfo',
+        data: formData,
+      });
+      console.log(uploadInfo.data);
+    } else {
+      alert('You have to select at least 1 image.')
     }
-  }
+  };
 
   const deleteImage = e => {
-    setFormValues({
-      ...formValues,
-      images: formValues.images.filter(image => image.local !== e.target.value),
+    setFormData({
+      ...formData,
+      images: formData.images.filter(image => image.local !== e.target.value),
     });
   };
 
   const addImageToState = e => {
     const selectedImage = e.target.files[0];
-    const formData = new FormData();
-    formData.append("image", selectedImage);
 
-    setFormValues({
-      ...formValues,
-      images: [...formValues.images, {
+    setFormData({
+      ...formData,
+      images: [...formData.images, {
         local: window.URL.createObjectURL(selectedImage),
-        formData,
+        selectedImage,
       }],
     });
-
-    // const formValues = new formValues();
-    // formValues.append('image', selectedImage);
-
   };
+
+  useEffect(() => {
+    const getCars = async () => {
+      const loadInfo = await axios({
+        method: 'get',
+        url: '/all'
+      })
+      console.log(loadInfo.data);
+    };
+
+    getCars();
+  }, [])
  
   return (
     <div className="edit-cars">
     <NavBar />
     <div className="content">
       <h3>Add new car</h3>
-      <form className="new-car" onSubmit={addCar}>
+      <form className="new-car" onSubmit={handleSubmit}>
         <div className="form-info">
           <label htmlFor="model">
             Model:
@@ -152,7 +184,7 @@ const EditCars = () => {
         <p>You can upload up to 5 images</p>
         <div className="uploaded-images">
           {
-            formValues.images.map(image => (
+            formData.images.map(image => (
               <>
                 <div className="image-container">
                   <img src={image.local} alt="uploaded" className="image" />
@@ -164,7 +196,7 @@ const EditCars = () => {
         </div>
         <label htmlFor="image">
           <span>Upload Images: </span>
-          <input type="file" id="image" name="image" onChange={addImageToState} disabled={formValues.images.length === 5 && true} accept=".jpg, .jpeg, .png" />
+          <input type="file" id="image" name="image" onChange={addImageToState} disabled={formData.images.length === 5 && true} accept=".jpg, .jpeg, .png" />
         </label>
         <button type="submit">Create</button>
       </form>
