@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import NavBar from '../NavBar';
+import axios from '../../axios'
 import './style.scss';
 
 const carTypes = ['SUV', 'Truck', 'Sedan', 'Van', 'Luxury Car', 'Sports Car'];
 const transmission = ['Auto', 'Manual'];
 
 const EditCars = () => {
-  const [formData, setFormData] = useState({
+  const [formValues, setFormValues] = useState({
     model: '',
     carType: carTypes[0],
     price: '',
@@ -20,36 +21,67 @@ const EditCars = () => {
   });
 
   const handleChange = e => {
-    setFormData({
-      ...formData,
+    setFormValues({
+      ...formValues,
       [e.target.name]: e.target.value,
     })
   }
 
-  const addCar = e => {
+  const addCar = async e => {
     e.preventDefault();
-    console.log(formData);
+    const { images } = formValues;
+    if (images.length < 1) {
+      alert('You have to have at least 1 image');
+    } else {
+      console.log(images[0].formData);
+      axios.post('/uploadImages', images[0].formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(res => {
+        console.log(res)
+      })
+      // const imagesResponse = await axios({
+      //   method: 'post',
+      //   url: '/uploadImages',
+      //   file: images[0].formData,
+      // })
+    
+      // console.log(imagesResponse.data);
+
+      // const response = await axios({
+      //   method: 'post',
+      //   url: '/create-car',
+      //   data: formValues,
+      // });
+      // console.log(response.data);
+    }
   }
 
   const deleteImage = e => {
-    setFormData({
-      ...formData,
-      images: formData.images.filter(image => image.local !== e.target.value),
+    setFormValues({
+      ...formValues,
+      images: formValues.images.filter(image => image.local !== e.target.value),
     });
   };
 
   const addImageToState = e => {
     const selectedImage = e.target.files[0];
-    const formdata = new FormData();
-    formdata.append('image', selectedImage);
+    const formData = new FormData();
+    formData.append("image", selectedImage);
 
-    setFormData({
-      ...formData,
-      images: [...formData.images, {
+    setFormValues({
+      ...formValues,
+      images: [...formValues.images, {
         local: window.URL.createObjectURL(selectedImage),
-        formdata,
+        formData,
       }],
     });
+
+    // const formValues = new formValues();
+    // formValues.append('image', selectedImage);
+
   };
  
   return (
@@ -120,7 +152,7 @@ const EditCars = () => {
         <p>You can upload up to 5 images</p>
         <div className="uploaded-images">
           {
-            formData.images.map(image => (
+            formValues.images.map(image => (
               <>
                 <div className="image-container">
                   <img src={image.local} alt="uploaded" className="image" />
@@ -132,7 +164,7 @@ const EditCars = () => {
         </div>
         <label htmlFor="image">
           <span>Upload Images: </span>
-          <input type="file" id="image" name="image" onChange={addImageToState} disabled={formData.images.length === 5 && true} accept=".jpg, .jpeg, .png" />
+          <input type="file" id="image" name="image" onChange={addImageToState} disabled={formValues.images.length === 5 && true} accept=".jpg, .jpeg, .png" />
         </label>
         <button type="submit">Create</button>
       </form>
