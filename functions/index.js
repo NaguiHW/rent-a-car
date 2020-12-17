@@ -40,4 +40,8 @@ app.use((req, res) => {
 });
 
 // Listen Command
-exports.api = functions.https.onRequest(app);
+const port = process.env.PORT || 8000;
+
+app.listen(port, () => {
+  console.log(`App listening on port ${port}`);
+});
