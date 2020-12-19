@@ -8,24 +8,38 @@ const carTypes = ['All', 'SUV', 'Truck', 'Sedan', 'Van', 'Luxury Car', 'Sports C
 
 const Home = ({ userStatus }) => {
   const [showCars, setShowCars] = useState([]);
+  const [filterCars, setFilterCars] = useState(carTypes[0]);
 
-  const loadCars = () => {
-    axios.get('https://db-car.herokuapp.com/cars', { withCredentials: true })
-      .then(res => {
-        setShowCars(res.data.cars);
-      }).catch(err => {
-        console.error(err);
-      })
-  };
+  const updateFilter = e => {
+    setFilterCars(e.target.value)
+  }
 
   useEffect(() => {
-    loadCars();
-  }, []);
+    if (filterCars === 'All') {
+      axios.get('https://db-car.herokuapp.com/cars', { withCredentials: true })
+        .then(res => {
+          setShowCars(res.data.cars);
+        }).catch(err => {
+          console.error(err);
+        })
+    } else {
+      axios.get(`https://db-car.herokuapp.com/filterBy/${filterCars}`, { withCredentials: true })
+        .then(res => {
+          if (res.data.car) {
+            setShowCars(res.data.car);
+          } else {
+            setShowCars([])
+          }
+        }).catch(err => {
+          console.error(err);
+        })
+    }
+  }, [filterCars])
 
   return (
     <div className="home">
       <div className="filters">
-        <select name="car-types" id="car-types">
+        <select name="car-types" id="car-types" onChange={updateFilter}>
           {
             carTypes.map(type => (
               <option value={type} key={type}>{type}</option>
@@ -36,7 +50,7 @@ const Home = ({ userStatus }) => {
       <div className="cars">
         {
           showCars.map(car => (
-            <CarCard userStatus={userStatus} car={car} />
+            <CarCard userStatus={userStatus} car={car} key={car.id} />
           ))
         }
       </div>
