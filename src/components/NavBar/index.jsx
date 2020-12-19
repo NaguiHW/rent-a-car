@@ -26,7 +26,6 @@ const NavBar = ({ userStatus, updateUserStatus, admin }) => {
           userStatus
           ? (
             <>
-              <Link to="/">Make a Reservation</Link>
               <Link to="/">My Reservations</Link>
               {
                 admin && (

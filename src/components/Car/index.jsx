@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import './style.scss';
 
 const Car = () => {
   const [car, setCar] = useState({})
@@ -47,12 +48,9 @@ const Car = () => {
           <div className="item">
             <h3>Transmission: {car.transmission}</h3>
           </div>
-          <div className="item">
-            <h3>Quantity: {car.quantity}</h3>
-          </div>
         </div>
       </div>
-      <button type="button">Make a reservation</button>
+      <Link to="/">Make a reservation</Link>
     </div>
   );
 };
