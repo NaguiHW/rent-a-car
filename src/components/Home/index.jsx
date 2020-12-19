@@ -10,11 +10,12 @@ const Home = () => {
   const [userStatus, setUserStatus] = useState(false);
 
   useEffect(() => {
-    axios.get('https://serene-bayou-97137.herokuapp.com/logged_in')
+    axios.get('https://serene-bayou-97137.herokuapp.com/logged_in', { withCredentials: true })
       .then(res => {
-        setUserStatus(res.data.logged_in)
+        setUserStatus(res.data.logged_in);
+        console.log(res.data)
       }).catch(err => {
-        console.error(err)
+        console.error(err);
       })
   }, []); 
 

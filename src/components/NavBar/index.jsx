@@ -19,7 +19,7 @@ const NavBar = ({ userStatus }) => (
         ) : (
           <>
             <Link to="/">Log In</Link>
-            <Link to="/">Create Account</Link>
+            <Link to="/signin">Create Account</Link>
           </>
         )
       }
