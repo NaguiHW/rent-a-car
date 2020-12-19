@@ -20,7 +20,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      <NavBar />
+      <NavBar userStatus={userStatus} />
       <div className="content">
         <div className="filters">
           <select name="car-types" id="car-types">
