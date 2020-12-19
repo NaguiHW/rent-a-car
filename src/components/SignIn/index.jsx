@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import NavBar from '../NavBar';
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -24,17 +23,15 @@ const SignIn = () => {
   const handleSubmit = e => {
     e.preventDefault();
     const user = formData;
+
     axios.post('https://serene-bayou-97137.herokuapp.com/registrations', { user }, { withCredentials: true })
       .then(res => {
         console.log(res.data);
-      })
-      .then(() => {
         history.push('/');
       }).catch(err => {
         console.error(err);
       })
-    console.log(formData);
-  }
+  };
 
   return (
     <div className="signin">

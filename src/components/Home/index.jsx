@@ -9,11 +9,14 @@ const carTypes = ['All', 'SUV', 'Truck', 'Sedan', 'Van', 'Luxury Car', 'Sports C
 const Home = () => {
   const [userStatus, setUserStatus] = useState(false);
 
+  const updateUserStatus = () => {
+    setUserStatus(false);
+  };
+
   useEffect(() => {
     axios.get('https://serene-bayou-97137.herokuapp.com/logged_in', { withCredentials: true })
       .then(res => {
         setUserStatus(res.data.logged_in);
-        console.log(res.data)
       }).catch(err => {
         console.error(err);
       })
@@ -21,7 +24,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      <NavBar userStatus={userStatus} />
+      <NavBar userStatus={userStatus} updateUserStatus={updateUserStatus} />
       <div className="content">
         <div className="filters">
           <select name="car-types" id="car-types">
