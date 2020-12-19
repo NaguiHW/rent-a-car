@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import './style.scss';
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -22,14 +23,19 @@ const SignIn = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const user = formData;
-
-    axios.post('https://serene-bayou-97137.herokuapp.com/registrations', { user }, { withCredentials: true })
-      .then(res => {
-        history.push('/');
-      }).catch(err => {
-        console.error(err);
-      })
+    const { password, password_confirmation } = formData;
+    if (password === password_confirmation) {
+      const user = formData;
+  
+      axios.post('https://serene-bayou-97137.herokuapp.com/registrations', { user }, { withCredentials: true })
+        .then(res => {
+          history.push('/');
+        }).catch(err => {
+          console.error(err);
+        })
+    } else {
+      alert('Password and repeat password doesn\'t match.')
+    }
   };
 
   return (
