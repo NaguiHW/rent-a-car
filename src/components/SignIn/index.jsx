@@ -9,7 +9,7 @@ const SignIn = () => {
     email: '',
     password: '',
     password_confirmation: '',
-  })
+  });
 
   const history = useHistory();
 
@@ -26,7 +26,6 @@ const SignIn = () => {
 
     axios.post('https://serene-bayou-97137.herokuapp.com/registrations', { user }, { withCredentials: true })
       .then(res => {
-        console.log(res.data);
         history.push('/');
       }).catch(err => {
         console.error(err);
