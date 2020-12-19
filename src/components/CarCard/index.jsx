@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import './style.scss';
 
-const CarCard = () => (
+const CarCard = ({ userStatus }) => (
   <div className="car-card">
     <h1 className="title">Car Name</h1>
     <div className="image-container">
@@ -14,9 +15,17 @@ const CarCard = () => (
     </div>
     <div className="options">
       <Link to="/">More Info</Link>
-      <Link to="/">Make a Reservation</Link>
+      {
+        userStatus && (
+          <Link to="/">Make a Reservation</Link>
+        )
+      }
     </div>
   </div>
 );
+
+CarCard.propTypes = {
+  userStatus: PropTypes.bool.isRequired,
+};
 
 export default CarCard;
