@@ -1,0 +1,99 @@
+.manage-cars {
+  .new-car {
+    width: 1440px;
+    margin: 0 auto;
+
+    > h3 {
+      text-align: center;
+      font-size: 24px;
+      margin: 10px 0;
+    }
+
+    .new-car {
+      width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .form-info {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 10px;
+        row-gap: 10px;
+
+        input, select {
+          width: 100%;
+          padding: 0 5px;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
+      }
+
+      .uploaded-images {
+        display: flex;
+        margin-top: 15px;
+  
+        .image-container {
+          display: flex;
+          width: 100px;
+          height: 100px;
+          margin: 5px 5px 5px 0;
+  
+          .image {
+            width: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+          }
+        }
+  
+        .icon-container {
+          background-color: red;
+          width: 28px;
+          height: 28px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          margin-top: -5px;
+          margin-left: -20px;
+          cursor: pointer;
+          border: none;
+          align-self: flex-start;
+          color: white;
+          font-weight: bold;
+  
+          &:hover {
+            background-color: rgb(196, 0, 0);
+          }
+        }
+      }
+
+      > button {
+        margin: 20px 0;
+        padding: 10px 25px;
+        font-size: 20px;
+        border: none;
+        color: white;
+        background-color: #2F59A7;
+        border-radius: 25px;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-weight: 700;
+        transition: 0.3s background-color;
+         
+        &:hover {
+          background-color: #163164;
+        }
+      }
+    }
+  }
+}
