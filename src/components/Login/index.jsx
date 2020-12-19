@@ -2,14 +2,11 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-const SignIn = () => {
+const Login = () => {
   const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
     email: '',
     password: '',
-    password_confirmation: '',
-  })
+  });
 
   const history = useHistory();
 
@@ -24,26 +21,17 @@ const SignIn = () => {
     e.preventDefault();
     const user = formData;
 
-    axios.post('https://serene-bayou-97137.herokuapp.com/registrations', { user }, { withCredentials: true })
+    axios.post('https://serene-bayou-97137.herokuapp.com/sessions', { user }, { withCredentials: true })
       .then(res => {
-        console.log(res.data);
         history.push('/');
       }).catch(err => {
         console.error(err);
       })
   };
-
+  
   return (
-    <div className="signin">
+    <div className="login">
       <form onSubmit={handleSubmit}>
-        <label htmlFor="first_name">
-          First Name:
-          <input type="text" name="first_name" id="first_name" placeholder="John" required autoComplete="off" onChange={handleChange} />
-        </label>
-        <label htmlFor="last_name">
-          Last Name:
-          <input type="text" name="last_name" id="last_name" placeholder="Doe" required autoComplete="off" onChange={handleChange} />
-        </label>
         <label htmlFor="email">
           Email:
           <input type="email" name="email" id="email" placeholder="john@doe.com" required autoComplete="off" onChange={handleChange} />
@@ -52,15 +40,11 @@ const SignIn = () => {
           Password:
           <input type="password" name="password" id="password" required onChange={handleChange} />
         </label>
-        <label htmlFor="password_confirmation">
-          Repeat Password:
-          <input type="password" name="password_confirmation" id="password_confirmation" required onChange={handleChange} />
-        </label>
-        <button type="submit">Create Account</button>
+        <button type="submit">Login</button>
       </form>
       <Link to="/">Home</Link>
     </div>
   );
 };
 
-export default SignIn;
+export default Login;

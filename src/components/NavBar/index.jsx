@@ -32,7 +32,7 @@ const NavBar = ({ userStatus, updateUserStatus }) => {
             </>
           ) : (
             <>
-              <Link to="/">Log In</Link>
+              <Link to="/login">Log In</Link>
               <Link to="/signin">Create Account</Link>
             </>
           )
