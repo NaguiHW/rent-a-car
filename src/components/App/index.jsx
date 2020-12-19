@@ -43,7 +43,12 @@ const App = () => {
         <Route exact path="/login">
           <Login updateUserStatus={updateUserStatus} />
         </Route>
-        <Route exact path="/manageCars" component={ManageCars} />
+        <Route exact path="/manageCars">
+          <>
+            <NavBar userStatus={userStatus} admin={admin} updateUserStatus={updateUserStatus} />
+            <ManageCars />
+          </>
+        </Route>
       </Switch>
     </Router>
   );
