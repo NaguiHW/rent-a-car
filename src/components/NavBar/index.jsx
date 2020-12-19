@@ -8,9 +8,9 @@ const NavBar = ({ userStatus, updateUserStatus, admin }) => {
   const history = useHistory();
   
   const logout = () => {
-    axios.delete('https://serene-bayou-97137.herokuapp.com/logout', { withCredentials: true })
+    axios.delete('https://db-car.herokuapp.com/logout', { withCredentials: true })
       .then(res => {
-        updateUserStatus();
+        updateUserStatus(!res.data.logged_out, res.data.logged_out);
         history.push('/');
       }).catch(err => {
         console.error(err);
@@ -27,11 +27,11 @@ const NavBar = ({ userStatus, updateUserStatus, admin }) => {
           ? (
             <>
               <Link to="/">Make a Reservation</Link>
-              <Link to="/">My Rservations</Link>
+              <Link to="/">My Reservations</Link>
               {
                 admin && (
                   <>
-                    <Link to="/">Manage Cars</Link>
+                    <Link to="/manageCars">Manage Cars</Link>
                     <Link to="/">All Reservations</Link>
                   </>
                 )
