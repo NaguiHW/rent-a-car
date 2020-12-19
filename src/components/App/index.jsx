@@ -37,7 +37,9 @@ const App = () => {
             <Home userStatus={userStatus} />
           </>
         </Route>
-        <Route exact path="/signin" component={SignIn} />
+        <Route exact path="/signin">
+          <SignIn updateUserStatus={updateUserStatus} />
+        </Route>
         <Route exact path="/login">
           <Login updateUserStatus={updateUserStatus} />
         </Route>
