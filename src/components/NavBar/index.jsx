@@ -10,7 +10,7 @@ const NavBar = ({ userStatus, updateUserStatus, admin }) => {
   const logout = () => {
     axios.delete('https://serene-bayou-97137.herokuapp.com/logout', { withCredentials: true })
       .then(res => {
-        updateUserStatus();
+        updateUserStatus(!res.data.logged_out, res.data.logged_out);
         history.push('/');
       }).catch(err => {
         console.error(err);

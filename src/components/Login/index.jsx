@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import './style.scss';
 
-const Login = () => {
+const Login = ({ updateUserStatus }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -24,6 +25,7 @@ const Login = () => {
 
     axios.post('https://serene-bayou-97137.herokuapp.com/sessions', { user }, { withCredentials: true })
       .then(res => {
+        updateUserStatus(res.data.logged_in, res.data.user.admin);
         history.push('/');
       }).catch(err => {
         console.error(err);
@@ -47,5 +49,9 @@ const Login = () => {
     </div>
   );
 };
+
+Login.propTypes = {
+  updateUserStatus: PropTypes.func.isRequired,
+}
 
 export default Login;

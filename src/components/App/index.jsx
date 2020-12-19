@@ -11,16 +11,18 @@ const App = () => {
   const [userStatus, setUserStatus] = useState(false);
   const [admin, setAdmin] = useState(false);
 
-  const updateUserStatus = () => {
-    setUserStatus(false);
+  const updateUserStatus = (status, isAdmin) => {
+    setUserStatus(status);
+    setAdmin(isAdmin);
   };
 
   useEffect(() => {
     axios.get('https://serene-bayou-97137.herokuapp.com/logged_in', { withCredentials: true })
       .then(res => {
         setUserStatus(res.data.logged_in);
-        setAdmin(res.data.user.admin);
-        console.log(res.data);
+        if (res.data.user) {
+          setAdmin(res.data.user.admin);
+        }
       }).catch(err => {
         console.error(err);
       })
@@ -36,7 +38,9 @@ const App = () => {
           </>
         </Route>
         <Route exact path="/signin" component={SignIn} />
-        <Route exact path="/login" component={Login} />
+        <Route exact path="/login">
+          <Login updateUserStatus={updateUserStatus} />
+        </Route>
         <Route exact path="/manageCars" component={ManageCars} />
       </Switch>
     </Router>
