@@ -31,7 +31,6 @@ const NavBar = ({ userStatus, updateUserStatus, admin }) => {
                 admin && (
                   <>
                     <Link to="/manageCars">Manage Cars</Link>
-                    <Link to="/">All Reservations</Link>
                   </>
                 )
               }
