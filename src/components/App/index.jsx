@@ -5,7 +5,7 @@ import Home from '../Home';
 const App = () => (
   <Router>
     <Switch>
-      <Route exact path="/" render={Home} />
+      <Route exact path="/" component={Home} />
     </Switch>
   </Router>
 );
