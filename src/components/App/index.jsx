@@ -7,6 +7,7 @@ import ManageCars from '../ManageCars';
 import NavBar from '../NavBar';
 import SignIn from '../SignIn';
 import Car from '../Car';
+import Reservation from '../Reservation';
 
 const App = () => {
   const [userStatus, setUserStatus] = useState(false);
@@ -42,6 +43,12 @@ const App = () => {
           <>
             <NavBar userStatus={userStatus} admin={admin} updateUserStatus={updateUserStatus} />
             <Car />
+          </>
+        </Route>
+        <Route exact path="/reservation/:id">
+          <>
+            <NavBar userStatus={userStatus} admin={admin} updateUserStatus={updateUserStatus} />
+            <Reservation />
           </>
         </Route>
         <Route exact path="/signin">

@@ -17,7 +17,7 @@ const CarCard = ({ userStatus, car }) => (
       <Link to={`/car/${car.id}`}>More Info</Link>
       {
         userStatus && (
-          <Link to="/">Make a Reservation</Link>
+          <Link to={`/reservation/${car.id}`}>Make a Reservation</Link>
         )
       }
     </div>
