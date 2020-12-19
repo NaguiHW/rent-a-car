@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import './style.scss';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -33,11 +34,11 @@ const Login = () => {
     <div className="login">
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">
-          Email:
+          Email:<br />
           <input type="email" name="email" id="email" placeholder="john@doe.com" required autoComplete="off" onChange={handleChange} />
         </label>
         <label htmlFor="password">
-          Password:
+          Password:<br />
           <input type="password" name="password" id="password" required onChange={handleChange} />
         </label>
         <button type="submit">Login</button>
