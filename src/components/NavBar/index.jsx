@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import './style.scss';
 
-const NavBar = ({ userStatus, updateUserStatus }) => {
+const NavBar = ({ userStatus, updateUserStatus, admin }) => {
   const history = useHistory();
   
   const logout = () => {
@@ -28,6 +28,14 @@ const NavBar = ({ userStatus, updateUserStatus }) => {
             <>
               <Link to="/">Make a Reservation</Link>
               <Link to="/">My Rservations</Link>
+              {
+                admin && (
+                  <>
+                    <Link to="/">Manage Cars</Link>
+                    <Link to="/">All Reservations</Link>
+                  </>
+                )
+              }
               <button type="button" onClick={logout}>Log Out</button>
             </>
           ) : (
@@ -44,6 +52,7 @@ const NavBar = ({ userStatus, updateUserStatus }) => {
 
 NavBar.propTypes = {
   userStatus: PropTypes.bool.isRequired,
+  admin: PropTypes.bool.isRequired,
   updateUserStatus: PropTypes.func.isRequired,
 };
 
