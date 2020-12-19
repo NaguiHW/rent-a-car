@@ -49,7 +49,7 @@ const Car = () => {
           </div>
         </div>
       </div>
-      <Link to="/">Make a reservation</Link>
+      <Link to={`/reservation/${car.id}`}>Make a reservation</Link>
     </div>
   );
 };
