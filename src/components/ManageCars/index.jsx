@@ -96,7 +96,6 @@ const ManageCars = () => {
   };
 
   const deleteCar = id => {
-    console.log(id);
     axios.delete(`https://db-car.herokuapp.com/cars/${id}`, { withCredentials: true })
       .then(res => {
         loadCars();

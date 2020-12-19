@@ -11,7 +11,6 @@ const Car = () => {
     axios.get(`https://db-car.herokuapp.com/cars/${id}`, { withCredentials: true })
       .then(res => {
         setCar(res.data.car[0]);
-        console.log(res.data.car[0]);
       }).catch(err => {
         console.error(err);
       })
@@ -50,7 +49,7 @@ const Car = () => {
           </div>
         </div>
       </div>
-      <Link to="/">Make a reservation</Link>
+      <Link to={`/reservation/${car.id}`}>Make a reservation</Link>
     </div>
   );
 };
