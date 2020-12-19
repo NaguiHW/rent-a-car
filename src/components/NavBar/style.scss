@@ -27,5 +27,20 @@
         color: #F4D06F;
       }
     }
+
+    button {
+      border: none;
+      background-color: #F4D06F;
+      color: #2F59A7;
+      font-weight: 700;
+      font-size: 20px;
+      padding: 5px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      
+      &:hover {
+        background-color: #d1ae4f;
+      }
+    }
   }
 }

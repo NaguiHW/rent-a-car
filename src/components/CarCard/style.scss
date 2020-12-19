@@ -50,10 +50,18 @@
       margin: 5px 0;
       font-weight: 700;
       background-color: #F4D06F;
+
+      &:hover {
+        background-color: #d1ae4f;
+      }
       
       &:nth-of-type(1) {
         background-color: #9DD9D2;
         color: #2F59A7;
+
+        &:hover {
+          background-color: #71bdb4;
+        }
       }
     }
   }

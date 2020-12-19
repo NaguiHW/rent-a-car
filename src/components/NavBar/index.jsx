@@ -1,17 +1,59 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 import './style.scss';
 
-const NavBar = () => (
-  <nav className="navbar">
-    <div className="logo">
-      <Link to="/">RentACar</Link>
-    </div>
-    <div className="options">
-      <Link to="/">Make a Reservation</Link>
-      <Link to="/">Profile</Link>
-    </div>
-  </nav>
-);
+const NavBar = ({ userStatus, updateUserStatus, admin }) => {
+  const history = useHistory();
+  
+  const logout = () => {
+    axios.delete('https://serene-bayou-97137.herokuapp.com/logout', { withCredentials: true })
+      .then(res => {
+        updateUserStatus();
+        history.push('/');
+      }).catch(err => {
+        console.error(err);
+      });
+  };
+  return (
+    <nav className="navbar">
+      <div className="logo">
+        <Link to="/">RentACar</Link>
+      </div>
+      <div className="options">
+        {
+          userStatus
+          ? (
+            <>
+              <Link to="/">Make a Reservation</Link>
+              <Link to="/">My Rservations</Link>
+              {
+                admin && (
+                  <>
+                    <Link to="/">Manage Cars</Link>
+                    <Link to="/">All Reservations</Link>
+                  </>
+                )
+              }
+              <button type="button" onClick={logout}>Log Out</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Log In</Link>
+              <Link to="/signin">Create Account</Link>
+            </>
+          )
+        }
+      </div>
+    </nav>
+  );
+};
+
+NavBar.propTypes = {
+  userStatus: PropTypes.bool.isRequired,
+  admin: PropTypes.bool.isRequired,
+  updateUserStatus: PropTypes.func.isRequired,
+};
 
 export default NavBar;
