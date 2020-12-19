@@ -23,7 +23,7 @@ const Login = ({ updateUserStatus }) => {
     e.preventDefault();
     const user = formData;
 
-    axios.post('https://serene-bayou-97137.herokuapp.com/sessions', { user }, { withCredentials: true })
+    axios.post('https://db-car.herokuapp.com/sessions', { user }, { withCredentials: true })
       .then(res => {
         updateUserStatus(res.data.logged_in, res.data.user.admin);
         history.push('/');

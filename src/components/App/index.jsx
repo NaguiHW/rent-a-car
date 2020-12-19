@@ -17,7 +17,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    axios.get('https://serene-bayou-97137.herokuapp.com/logged_in', { withCredentials: true })
+    axios.get('https://db-car.herokuapp.com/logged_in', { withCredentials: true })
       .then(res => {
         setUserStatus(res.data.logged_in);
         if (res.data.user) {

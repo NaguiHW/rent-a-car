@@ -8,7 +8,7 @@ const NavBar = ({ userStatus, updateUserStatus, admin }) => {
   const history = useHistory();
   
   const logout = () => {
-    axios.delete('https://serene-bayou-97137.herokuapp.com/logout', { withCredentials: true })
+    axios.delete('https://db-car.herokuapp.com/logout', { withCredentials: true })
       .then(res => {
         updateUserStatus(!res.data.logged_out, res.data.logged_out);
         history.push('/');

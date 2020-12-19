@@ -28,7 +28,7 @@ const SignIn = ({ updateUserStatus }) => {
     if (password === password_confirmation) {
       const user = formData;
 
-      axios.post('https://serene-bayou-97137.herokuapp.com/registrations', { user }, { withCredentials: true })
+      axios.post('https://db-car.herokuapp.com/registrations', { user }, { withCredentials: true })
         .then(res => {
           updateUserStatus(res.data.status === 'created' && true, res.data.user.admin);
           history.push('/');

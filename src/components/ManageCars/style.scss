@@ -39,41 +39,12 @@
       }
 
       .uploaded-images {
+        width: 50%;
         display: flex;
-        margin-top: 15px;
-  
-        .image-container {
-          display: flex;
-          width: 100px;
-          height: 100px;
-          margin: 5px 5px 5px 0;
-  
-          .image {
-            width: 100%;
-            object-fit: cover;
-            border-radius: 5px;
-          }
-        }
-  
-        .icon-container {
-          background-color: red;
-          width: 28px;
-          height: 28px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 50%;
-          margin-top: -5px;
-          margin-left: -20px;
-          cursor: pointer;
-          border: none;
-          align-self: flex-start;
-          color: white;
-          font-weight: bold;
-  
-          &:hover {
-            background-color: rgb(196, 0, 0);
-          }
+        flex-direction: column;
+
+        input {
+          margin: 5px 0;
         }
       }
 
@@ -92,6 +63,61 @@
          
         &:hover {
           background-color: #163164;
+        }
+      }
+    }
+  }
+
+  .all-cars {
+    width: 1200px;
+    margin: 0 auto;
+
+    .car-container {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      border: 1px solid rgb(233, 233, 233);
+      box-shadow: 3px 3px 5px rgb(235, 235, 235);
+      padding: 10px;
+      border-radius: 30px;
+
+      .left {
+        width: 30%;
+
+        .img-container {
+          width: 90%;
+
+          img {
+            width: 100%;
+          }
+        }
+      }
+
+      .center {
+        width: 55%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        .item {
+          margin: 5px 0;
+        }
+      }
+
+      .right {
+        width: 15%;
+
+        button {
+          border: none;
+          font-size: 24px;
+          padding: 8px 15px;
+          background-color: rgb(197, 15, 15);
+          color: white;
+          border-radius: 25px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: rgb(133, 11, 11);
+          }
         }
       }
     }
