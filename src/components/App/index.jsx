@@ -6,6 +6,7 @@ import Login from '../Login';
 import ManageCars from '../ManageCars';
 import NavBar from '../NavBar';
 import SignIn from '../SignIn';
+import Car from '../Car';
 
 const App = () => {
   const [userStatus, setUserStatus] = useState(false);
@@ -35,6 +36,12 @@ const App = () => {
           <>
             <NavBar userStatus={userStatus} admin={admin} updateUserStatus={updateUserStatus} />
             <Home userStatus={userStatus} />
+          </>
+        </Route>
+        <Route exact path="/car/:id">
+          <>
+            <NavBar userStatus={userStatus} admin={admin} updateUserStatus={updateUserStatus} />
+            <Car />
           </>
         </Route>
         <Route exact path="/signin">
