@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../../axios';
 import Home from '../Home';
 import Login from '../Login';
 import ManageCars from '../ManageCars';
@@ -20,7 +20,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    axios.get('https://db-car.herokuapp.com/logged_in', { withCredentials: true })
+    axios.get('/logged_in', { withCredentials: true })
       .then(res => {
         setUserStatus(res.data.logged_in);
         if (res.data.user) {

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useHistory, useParams } from 'react-router-dom';
+import axios from '../../axios';
 import moment from 'moment';
 import './style.scss';
 
 const Reservation = () => {
   const { id } = useParams();
-  const [car, setCar] = useState({})
+  const [car, setCar] = useState({});
+  const history = useHistory();
   const [reservation, setReservation] = useState({
     user_id: 0,
     car_id: id,
@@ -24,8 +25,9 @@ const Reservation = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    axios.post('https://db-car.herokuapp.com/reservations', { reservation }, { withCredentials: true })
+    axios.post('/reservations', { reservation }, { withCredentials: true })
       .then(res => {
+        history.push('/myReservations')
         console.log(res.data);
       }).catch(err => {
         console.error(err);
@@ -34,13 +36,13 @@ const Reservation = () => {
   }
 
   useEffect(() => {
-    axios.get(`https://db-car.herokuapp.com/cars/${id}`, { withCredentials: true })
+    axios.get(`/cars/${id}`, { withCredentials: true })
       .then(res => {
         setCar(res.data.car[0]);
       }).catch(err => {
         console.error(err);
       });
-    axios.get('https://db-car.herokuapp.com/logged_in', { withCredentials: true })
+    axios.get('/logged_in', { withCredentials: true })
       .then(res => {
         if (res.data.user) {
           setReservation({
