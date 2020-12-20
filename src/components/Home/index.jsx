@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CarCard from '../CarCard';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import axios from '../../axios';
 import './style.scss';
 
 const carTypes = ['All', 'SUV', 'Truck', 'Sedan', 'Van', 'Luxury Car', 'Sports Car'];
@@ -16,14 +16,14 @@ const Home = ({ userStatus }) => {
 
   useEffect(() => {
     if (filterCars === 'All') {
-      axios.get('https://db-car.herokuapp.com/cars', { withCredentials: true })
+      axios.get('/cars', { withCredentials: true })
         .then(res => {
           setShowCars(res.data.cars);
         }).catch(err => {
           console.error(err);
         })
     } else {
-      axios.get(`https://db-car.herokuapp.com/filterBy/${filterCars}`, { withCredentials: true })
+      axios.get(`/filterBy/${filterCars}`, { withCredentials: true })
         .then(res => {
           if (res.data.car) {
             setShowCars(res.data.car);

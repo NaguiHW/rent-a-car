@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import axios from '../../axios';
 import './style.scss';
 
 const NavBar = ({ userStatus, updateUserStatus, admin }) => {
   const history = useHistory();
   
   const logout = () => {
-    axios.delete('https://db-car.herokuapp.com/logout', { withCredentials: true })
+    axios.delete('/logout', { withCredentials: true })
       .then(res => {
         updateUserStatus(!res.data.logged_out, res.data.logged_out);
         history.push('/');

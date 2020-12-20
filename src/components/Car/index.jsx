@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../../axios';
 import './style.scss';
 
 const Car = () => {
@@ -8,7 +8,7 @@ const Car = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`https://db-car.herokuapp.com/cars/${id}`, { withCredentials: true })
+    axios.get(`/cars/${id}`, { withCredentials: true })
       .then(res => {
         setCar(res.data.car[0]);
       }).catch(err => {

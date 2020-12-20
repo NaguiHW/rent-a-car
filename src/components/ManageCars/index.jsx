@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { storage } from '../../firebase';
+import axios from '../../axios';
 import './style.scss';
 
 const carTypes = ['SUV', 'Truck', 'Sedan', 'Van', 'Luxury Car', 'Sports Car'];
@@ -56,7 +55,7 @@ const ManageCars = () => {
           image4,
           image5,
         }
-        const res = await axios.post('https://db-car.herokuapp.com/cars', car, { withCredentials: true })
+        const res = await axios.post('/cars', car, { withCredentials: true })
           .then(res => {
             setFormData({
               model: '',
@@ -87,7 +86,7 @@ const ManageCars = () => {
   };
 
   const loadCars = () => {
-    axios.get('https://db-car.herokuapp.com/cars', { withCredentials: true })
+    axios.get('/cars', { withCredentials: true })
       .then(res => {
         setShowCars(res.data.cars);
       }).catch(err => {
@@ -96,7 +95,7 @@ const ManageCars = () => {
   };
 
   const deleteCar = id => {
-    axios.delete(`https://db-car.herokuapp.com/cars/${id}`, { withCredentials: true })
+    axios.delete(`/cars/${id}`, { withCredentials: true })
       .then(res => {
         loadCars();
         console.log(res);

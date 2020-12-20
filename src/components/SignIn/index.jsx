@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import axios from '../../axios';
 import './style.scss';
 
 const SignIn = ({ updateUserStatus }) => {
@@ -28,7 +28,7 @@ const SignIn = ({ updateUserStatus }) => {
     if (password === password_confirmation) {
       const user = formData;
 
-      axios.post('https://db-car.herokuapp.com/registrations', { user }, { withCredentials: true })
+      axios.post('/registrations', { user }, { withCredentials: true })
         .then(res => {
           updateUserStatus(res.data.status === 'created' && true, res.data.user.admin);
           history.push('/');
