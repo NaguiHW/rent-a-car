@@ -9,6 +9,7 @@ const MyReservations = () => {
     axios.get('https://db-car.herokuapp.com/reservations', { withCredentials: true })
       .then(res => {
         setReservations(res.data.reservations);
+        console.log(res.data);
       }).catch(err => {
         console.error(err);
       });
@@ -31,11 +32,19 @@ const MyReservations = () => {
     <div className="my-reservations">
       {
         reservations.map(res => (
-          <div className="reservation" key={res.id}>
-            <p>Start date: {res.startDate.split('T')[0]}</p>
-            <p>End date: {res.startDate.split('T')[0]}</p>
-            <p>Total: ${res.total}.00</p>
-            <button type="button" onClick={() => cancelReservation(res.id)}>Cancel Reservation</button>
+          <div className="res" key={res.id}>
+            <div className="left">
+              <img src={res.image1} alt="res.model"/>
+            </div>
+            <div className="center">
+              <h3>{res.model}</h3>
+              <p>Start date: {res.startDate.split('T')[0]}</p>
+              <p>End date: {res.startDate.split('T')[0]}</p>
+              <p>Total: ${res.total}.00</p>
+            </div>
+            <div className="right">
+              <button type="button" onClick={() => cancelReservation(res.id)}>Cancel Reservation</button>
+            </div>
           </div>
         ))
       }
