@@ -5,6 +5,8 @@ import axios from '../../axios';
 import './style.scss';
 
 const SignIn = ({ updateUserStatus }) => {
+  const [buttonState, setButtonState] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -24,6 +26,7 @@ const SignIn = ({ updateUserStatus }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    setButtonState(!buttonState);
     const { password, password_confirmation } = formData;
     if (password === password_confirmation) {
       const user = formData;
@@ -33,6 +36,8 @@ const SignIn = ({ updateUserStatus }) => {
           updateUserStatus(res.data.status === 'created' && true, res.data.user.admin);
           history.push('/');
         }).catch(err => {
+          setButtonState(false);
+          setErrorMessage('Something went wrong');
           console.error(err);
         })
     } else {
@@ -42,6 +47,7 @@ const SignIn = ({ updateUserStatus }) => {
 
   return (
     <div className="signin">
+      {errorMessage.length > 0 && <h4>{errorMessage}</h4>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="first_name">
           First Name:
@@ -63,7 +69,7 @@ const SignIn = ({ updateUserStatus }) => {
           Repeat Password:
           <input type="password" name="password_confirmation" id="password_confirmation" required onChange={handleChange} />
         </label>
-        <button type="submit">Create Account</button>
+        <button type="submit" disabled={buttonState && true}>Create Account</button>
       </form>
       <Link to="/">Home</Link>
     </div>

@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 const Login = ({ updateUserStatus }) => {
+  const [buttonState, setButtonState] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -22,18 +24,22 @@ const Login = ({ updateUserStatus }) => {
   const handleSubmit = e => {
     e.preventDefault();
     const user = formData;
-
+    setButtonState(!buttonState);
+    setErrorMessage('');
     axios.post('/sessions', { user }, { withCredentials: true })
       .then(res => {
         updateUserStatus(res.data.logged_in, res.data.user.admin);
         history.push('/');
       }).catch(err => {
+        setButtonState(false);
+        setErrorMessage('Your email and password doen\'t match.');
         console.error(err);
       })
   };
   
   return (
     <div className="login">
+      {errorMessage.length > 0 && <h4>{errorMessage}</h4>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">
           Email:<br />
@@ -43,7 +49,7 @@ const Login = ({ updateUserStatus }) => {
           Password:<br />
           <input type="password" name="password" id="password" required onChange={handleChange} />
         </label>
-        <button type="submit">Login</button>
+        <button type="submit" disabled={buttonState && true}>Login</button>
       </form>
       <Link to="/">Home</Link>
     </div>
